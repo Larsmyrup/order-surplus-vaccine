@@ -1,6 +1,10 @@
 # Order a Danish surplus vaccine 
 I wrote this simple script to help you write your name up on the surplus vaccine program (https://www.regionh.dk/presse-og-nyt/pressemeddelelser-og-nyheder/Sider/Tilmelding-til-at-modtage-overskydende-vaccine-mod-COVID-19.aspx)
 
+![order vaccine example](https://user-images.githubusercontent.com/3786627/121806832-bf5ea400-cc51-11eb-9477-9b9f01b0f403.gif)
+
+
+
 Simply edit `cypress/integration/order.js` and fill out your personal details, and the vaccination places you'd like to signup for.
 
 You may also set cypress environment variables instead.
