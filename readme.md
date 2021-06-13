@@ -36,3 +36,8 @@ Personally I have a Github Action run it on schedule and have added my personal 
  - CYPRESS_ADDRESS: Your Street
  - CYPRESS_ZIPCITY: 1234 City
  - CYPRESS_PHONE: 12345678
+
+Example of how it's setup in Github secrets:
+
+![image](https://user-images.githubusercontent.com/3786627/121805927-bd92e180-cc4d-11eb-90ea-987764fdf955.png)
+
