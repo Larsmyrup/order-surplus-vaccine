@@ -3,6 +3,7 @@
     "order:vaccine": "cypress run"
   },
   "dependencies": {
-    "cypress": "^7.4.0"
+    "cypress": "^7.4.0",
+    "nodemailer": "^6.6.1"
   }
 }

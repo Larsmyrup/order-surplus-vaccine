@@ -1,5 +1,5 @@
-const NAME = Cypress.env('NAME') || 'Mattias Siø Fjellvang';
-const AGE = Cypress.env('AGE') || '26';
+const NAME = Cypress.env('NAME') || 'Foo bar';
+const AGE = Cypress.env('AGE') || 28;
 const ADDRESS = Cypress.env('ADDRESS') || '';
 const ZIPCITY = Cypress.env('ZIPCITY') || '';
 const PHONE = Cypress.env('PHONE') || '';
@@ -11,27 +11,16 @@ afterEach(function() {
   }
 });
 
-// for a total list, check readme.md
 const VACCINATION_PLACES = [
 	{
-		name: 'Ballerup',
-		inputId: 'ch_50088941-106780581'
-	},
-	{
-		name: 'Hillerød',
+		name: 'Hillerød, Østergade 8',
 		inputId: 'ch_50088941-106780584'
 	},
 	{
-		name: 'Bella Center',
-		inputId: 'ch_50088941-106780582'
-	},
-	{
-		name: 'Øksenhallen, Halmtorvet',
-		inputId: 'ch_50088941-106780586'
+		name: 'Frederikssund Hospital, Frederikssundsvej 30 (kun opskrivning  torsdag)',
+		inputId: 'ch_50088941-187278225'
 	}
 ];
-
-// wait 120 seconds
 
 const now = new Date();
 const night = new Date(
@@ -52,11 +41,16 @@ if (msTillMidnight < 300000) { // if less than 5 minutes to midnight. Wait
 	});
 }
 
-VACCINATION_PLACES.forEach((vaccinationPlace) => {
+const EMAIL_CONFIG = {
+	EMAILSMTPHOST: Cypress.env('EMAILSMTPHOST'),
+  	EMAILSMTPORT: Cypress.env('EMAILSMTPORT'),
+  	EMAILAUTHUSER: Cypress.env('EMAILAUTHUSER'),
+  	EMAILAUTHPASS: Cypress.env('EMAILAUTHPASS'),
+  	FROMEMAIL: Cypress.env('FROMEMAIL'),
+  	TOEMAILS: Cypress.env('TOEMAILS')?.split(',')
+}
 
-	// if(!NAME || !AGE || !ADDRESS || !ZIPCITY || !PHONE) {
-	// 	Cypress.runner.stop()
-	// }
+VACCINATION_PLACES.forEach((vaccinationPlace, i) => {
 
 	describe('Order vaccine from: ' + vaccinationPlace.name + ' for ' + NAME, () => {
 		/* open page */
@@ -71,7 +65,7 @@ VACCINATION_PLACES.forEach((vaccinationPlace) => {
 		});
 	
 		/* name */
-		it('Fill out firstname', () => {
+		it('Fill out firstname: ' + NAME, () => {
 			const nameInputField = cy.get('.single-line input').first();
 			nameInputField.type(NAME).blur();
 		});
@@ -81,7 +75,7 @@ VACCINATION_PLACES.forEach((vaccinationPlace) => {
 		});
 	
 		/* age */
-		it('Fill out age', () => {
+		it('Fill out age: ' + AGE, () => {
 			const ageInputField = cy.get('.single-line input').first();
 			ageInputField.type(AGE).blur();
 		});
@@ -91,7 +85,7 @@ VACCINATION_PLACES.forEach((vaccinationPlace) => {
 		});
 	
 		/* address */
-		it('Fill out address', () => {
+		it('Fill out address: ' + ADDRESS, () => {
 			const addressInputField = cy.get('.single-line input').first();
 			addressInputField.type(ADDRESS).blur();
 		});
@@ -101,7 +95,7 @@ VACCINATION_PLACES.forEach((vaccinationPlace) => {
 		});
 	
 		/* zipcity */
-		it('Fill out zip & city', () => {
+		it('Fill out zip & city: ' + ZIPCITY, () => {
 			const zipCityInputField = cy.get('.single-line input').first();
 			zipCityInputField.type(ZIPCITY).blur();
 		});
@@ -111,7 +105,7 @@ VACCINATION_PLACES.forEach((vaccinationPlace) => {
 		});
 	
 		/* phone */
-		it('Fill out phone', () => {
+		it('Fill out phone: ' + PHONE, () => {
 			const phoneInputField = cy.get('.single-line input').first();
 			phoneInputField.type(PHONE).blur();
 		});
@@ -135,7 +129,8 @@ VACCINATION_PLACES.forEach((vaccinationPlace) => {
 			const vaccinationRadio = cy.get('label[for="' + vaccinationPlace.inputId + '"]').first();
 			vaccinationRadio.click();
 		});
-		it('Can click next after chosing vccination place', () => {
+
+		it('Can click next after chosing vaccination place', () => {
 			const nextButton = cy.get('.next-area .next-button').first();
 			nextButton.click();
 		});
@@ -154,3 +149,15 @@ VACCINATION_PLACES.forEach((vaccinationPlace) => {
 
 	});
 })
+
+if (EMAIL_CONFIG.EMAILSMTPHOST) {
+	describe('Sending mail to: ' + EMAIL_CONFIG.TOEMAILS.join(', '), () => {
+		const places = VACCINATION_PLACES.map(x => x.name).join(', ')
+		EMAIL_CONFIG.REGISTEREDTO = 'Du blev registreret til: ' + places
+	
+		it('Should send mail', () => {
+			cy.task('sendMail', EMAIL_CONFIG).then(result => console.log(result));
+			cy.wait(5000);
+		});
+	});
+}

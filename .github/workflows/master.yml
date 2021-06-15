@@ -19,3 +19,9 @@ jobs:
           CYPRESS_ADDRESS: ${{ secrets.ADDRESS }}
           CYPRESS_ZIPCITY: ${{ secrets.ZIPCITY }}
           CYPRESS_PHONE: ${{ secrets.PHONE }}
+          CYPRESS_FROMEMAIL: ${{ secrets.FROMEMAIL }}
+          CYPRESS_TOEMAILS: ${{ secrets.TOEMAILS }}
+          CYPRESS_EMAILSMTPHOST: ${{ secrets.EMAILSMTPHOST }}
+          CYPRESS_EMAILSMTPORT: ${{ secrets.EMAILSMTPORT }}
+          CYPRESS_EMAILAUTHUSER: ${{ secrets.EMAILAUTHUSER }}
+          CYPRESS_EMAILAUTHPASS: ${{ secrets.EMAILAUTHPASS }}
