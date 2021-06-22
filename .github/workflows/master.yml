@@ -3,7 +3,7 @@ name: Daily surplus vaccine
 # on: [push]
 on:
   schedule:
-    - cron:  '58 23 * * *'
+    - cron:  '05 00 * * *'
 
 jobs:
   order-surplus-vaccine:
@@ -14,11 +14,16 @@ jobs:
       - name: Order vaccine
         uses: cypress-io/github-action@v2
         env:
-          CYPRESS_NAME: ${{ secrets.NAME }}
-          CYPRESS_AGE: ${{ secrets.AGE }}
-          CYPRESS_ADDRESS: ${{ secrets.ADDRESS }}
-          CYPRESS_ZIPCITY: ${{ secrets.ZIPCITY }}
-          CYPRESS_PHONE: ${{ secrets.PHONE }}
+          CYPRESS_NAME_LARS: ${{ secrets.NAME_LARS }}
+          CYPRESS_AGE_LARS: ${{ secrets.AGE_LARS }}
+          CYPRESS_ADDRESS_LARS: ${{ secrets.ADDRESS_LARS }}
+          CYPRESS_ZIPCITY_LARS: ${{ secrets.ZIPCITY_LARS }}
+          CYPRESS_PHONE_LARS: ${{ secrets.PHONE_LARS }}
+          CYPRESS_NAME_LAERKE: ${{ secrets.NAME_LAERKE }}
+          CYPRESS_AGE_LAERKE: ${{ secrets.AGE_LAERKE }}
+          CYPRESS_ADDRESS_LAERKE: ${{ secrets.ADDRESS_LAERKE }}
+          CYPRESS_ZIPCITY_LAERKE: ${{ secrets.ZIPCITY_LAERKE }}
+          CYPRESS_PHONE_LAERKE: ${{ secrets.PHONE_LAERKE }}
           CYPRESS_FROMEMAIL: ${{ secrets.FROMEMAIL }}
           CYPRESS_TOEMAILS: ${{ secrets.TOEMAILS }}
           CYPRESS_EMAILSMTPHOST: ${{ secrets.EMAILSMTPHOST }}
